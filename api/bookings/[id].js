@@ -16,9 +16,18 @@ module.exports = async (req, res) => {
     return res.json(booking);
   }
 
-  // PATCH /api/bookings/:id — update status
-  if (req.method === 'PATCH') {
-    const { status } = req.body;
+  // POST /api/bookings/:id — update status or delete
+  if (req.method === 'POST') {
+    const body = req.body || {};
+
+    // Delete action
+    if (body._action === 'delete') {
+      await db.deleteBooking(id);
+      return res.json({ success: true });
+    }
+
+    // Status update
+    const { status } = body;
     if (!['confirmed', 'declined', 'pending'].includes(status)) {
       return res.status(400).json({ error: 'Invalid status' });
     }
@@ -30,12 +39,6 @@ module.exports = async (req, res) => {
     } catch (err) {
       console.error('Email error:', err.message);
     }
-    return res.json({ success: true });
-  }
-
-  // DELETE /api/bookings/:id
-  if (req.method === 'DELETE') {
-    await db.deleteBooking(id);
     return res.json({ success: true });
   }
 
