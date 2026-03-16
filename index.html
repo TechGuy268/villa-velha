@@ -476,58 +476,58 @@ nav.scrolled .hamburger span { background:var(--dark-text); }
 
 .gallery-grid {
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:4px;
+  grid-template-columns:1fr 1fr 1fr;
+  grid-template-rows:290px 290px 260px;
+  gap:6px;
   max-width:1200px; margin:60px auto 0;
 }
-.gallery-item:first-child { grid-row:span 2; }
+/* Alberto — large featured panel */
+.gallery-item:nth-child(1) {
+  grid-column:span 2;
+  grid-row:span 2;
+}
 
 .gallery-item {
   position:relative; overflow:hidden;
   background:var(--blush); cursor:pointer;
-  min-height:280px;
 }
 .gallery-item img {
   width:100%; height:100%; object-fit:cover;
+  object-position:center top;
   transition:transform 0.7s ease, filter 0.7s ease;
-  filter:brightness(0.9) saturate(1.05);
+  filter:brightness(0.92) saturate(1.05);
+  display:block;
 }
 .gallery-item:hover img {
-  transform:scale(1.07); filter:brightness(1) saturate(1.1);
+  transform:scale(1.04); filter:brightness(1) saturate(1.1);
 }
 
-.gallery-placeholder {
-  position:absolute; inset:0;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center; gap:14px;
-  background:linear-gradient(135deg,var(--blush) 0%,var(--blush-deep) 100%);
-}
-.gallery-placeholder svg {
-  width:44px; height:44px;
-  stroke:var(--pink); fill:none;
-  stroke-width:1.2; opacity:0.5;
-}
-.gallery-placeholder .ph-name {
-  font-family:'Playfair Display',serif;
-  font-style:italic; font-size:17px;
-  color:var(--mid-text); line-height:1.4;
-}
-.gallery-placeholder .ph-label {
-  font-family:'Raleway',sans-serif;
-  font-size:9px; letter-spacing:4px; text-transform:uppercase;
-  color:var(--muted-text);
-}
-
+/* Subtle dark overlay on hover for food photos */
 .gallery-item-overlay {
   position:absolute; inset:0;
-  background:linear-gradient(to top,rgba(168,67,90,0.75) 0%,transparent 55%);
+  background:linear-gradient(to top,rgba(44,21,32,0.3) 0%,transparent 50%);
   opacity:0; transition:opacity 0.4s;
-  display:flex; align-items:flex-end; justify-content:center; padding:24px;
 }
 .gallery-item:hover .gallery-item-overlay { opacity:1; }
-.gallery-overlay-text {
+
+/* Alberto label */
+.chef-label {
+  position:absolute; bottom:0; left:0; right:0;
+  padding:32px 36px 28px;
+  background:linear-gradient(to top,rgba(44,21,32,0.88) 0%,transparent 100%);
+  pointer-events:none;
+}
+.chef-label-name {
+  font-family:'Playfair Display',serif;
+  font-size:26px; font-weight:400;
+  color:#fff; letter-spacing:1px;
+  display:block; margin-bottom:5px;
+}
+.chef-label-title {
   font-family:'Raleway',sans-serif;
-  font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--white);
+  font-size:9px; letter-spacing:4px;
+  text-transform:uppercase; color:rgba(255,255,255,0.7);
+  display:block;
 }
 
 /* ======================================================
@@ -943,8 +943,9 @@ footer img { height:34px; filter:brightness(10); opacity:0.75; }
   .about-visual { min-height:420px; }
   .about-content { padding:60px 50px; }
   .features { grid-template-columns:repeat(2,1fr); padding:0 50px; }
-  .gallery-grid { grid-template-columns:repeat(2,1fr); }
-  .gallery-item:first-child { grid-row:span 1; }
+  .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+  .gallery-item:nth-child(1) { grid-column:span 2; grid-row:span 1; height:300px; }
+  .gallery-item { height:200px; }
   .contact { grid-template-columns:1fr; }
   .contact-left { padding:70px 50px; border-right:none; border-bottom:1px solid var(--border-light); }
   .contact-right { min-height:380px; }
@@ -960,7 +961,9 @@ footer img { height:34px; filter:brightness(10); opacity:0.75; }
   .hamburger { display:flex; }
   .section-pad { padding:70px 24px; }
   .gallery-section { padding:70px 24px; }
-  .gallery-grid { grid-template-columns:1fr 1fr; }
+  .gallery-grid { grid-template-columns:1fr 1fr; grid-template-rows:auto; }
+  .gallery-item:nth-child(1) { grid-column:span 2; grid-row:span 1; height:260px; }
+  .gallery-item { height:170px; }
   .menu-section { padding:70px 24px; }
   .menu-grid { grid-template-columns:1fr 1fr; }
   .booking-section { padding:70px 24px; }
@@ -979,7 +982,9 @@ footer img { height:34px; filter:brightness(10); opacity:0.75; }
 @media (max-width:480px) {
   .hero-btns { flex-direction:column; align-items:center; }
   .features { grid-template-columns:1fr; }
-  .gallery-grid { grid-template-columns:1fr; }
+  .gallery-grid { grid-template-columns:1fr; grid-template-rows:auto; }
+  .gallery-item:nth-child(1) { grid-column:span 1; grid-row:span 1; height:300px; }
+  .gallery-item { height:220px; }
   .menu-grid { grid-template-columns:1fr; }
   .about-stats { flex-direction:column; gap:0; }
   .stat { border-right:none; border-bottom:1px solid var(--border-light); padding:16px 0; }
@@ -1123,58 +1128,35 @@ footer img { height:34px; filter:brightness(10); opacity:0.75; }
 
   <div class="gallery-grid" id="galleryGrid">
 
-    <div class="gallery-item reveal" data-index="0" onclick="openLightbox(0)">
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
-        <div class="ph-name">Chef's Signature Starter</div>
-        <div class="ph-label">Photo coming soon</div>
+    <!-- Alberto — large featured panel -->
+    <div class="gallery-item reveal" onclick="openLightbox(0)">
+      <img src="images/alberto.jpg" alt="Alberto, Head Chef at Villa Velha" style="object-position:center center;">
+      <div class="chef-label">
+        <span class="chef-label-name">Alberto</span>
+        <span class="chef-label-title">Head Chef · Villa Velha</span>
       </div>
-      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
     </div>
 
-    <div class="gallery-item reveal" data-index="1" onclick="openLightbox(1)">
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
-        <div class="ph-name">Atlantic Octopus</div>
-        <div class="ph-label">Photo coming soon</div>
-      </div>
-      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    <!-- Food images -->
+    <div class="gallery-item reveal" onclick="openLightbox(1)">
+      <img src="images/food1.jpg" alt="Villa Velha dish">
+      <div class="gallery-item-overlay"></div>
     </div>
-
-    <div class="gallery-item reveal" data-index="2" onclick="openLightbox(2)">
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
-        <div class="ph-name">Tuna Tartare</div>
-        <div class="ph-label">Photo coming soon</div>
-      </div>
-      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    <div class="gallery-item reveal" onclick="openLightbox(2)">
+      <img src="images/food2.jpg" alt="Villa Velha dish">
+      <div class="gallery-item-overlay"></div>
     </div>
-
-    <div class="gallery-item reveal" data-index="3" onclick="openLightbox(3)">
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
-        <div class="ph-name">Seafood Paella</div>
-        <div class="ph-label">Photo coming soon</div>
-      </div>
-      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    <div class="gallery-item reveal" onclick="openLightbox(3)">
+      <img src="images/food3.jpg" alt="Villa Velha dish">
+      <div class="gallery-item-overlay"></div>
     </div>
-
-    <div class="gallery-item reveal" data-index="4" onclick="openLightbox(4)">
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
-        <div class="ph-name">Grilled Sea Bass</div>
-        <div class="ph-label">Photo coming soon</div>
-      </div>
-      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    <div class="gallery-item reveal" onclick="openLightbox(4)">
+      <img src="images/food4.jpg" alt="Villa Velha dish">
+      <div class="gallery-item-overlay"></div>
     </div>
-
-    <div class="gallery-item reveal" data-index="5" onclick="openLightbox(5)">
-      <div class="gallery-placeholder">
-        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
-        <div class="ph-name">Crème Brûlée</div>
-        <div class="ph-label">Photo coming soon</div>
-      </div>
-      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    <div class="gallery-item reveal" onclick="openLightbox(5)">
+      <img src="images/food5.jpg" alt="Villa Velha dish">
+      <div class="gallery-item-overlay"></div>
     </div>
 
   </div>
