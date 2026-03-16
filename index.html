@@ -1,0 +1,1750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Villa Velha | Alvor, Algarve | Chef Alberto Punset</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Raleway:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+/* ======================================================
+   ROOT & RESET
+====================================================== */
+:root {
+  --pink:         #D4637A;
+  --pink-light:   #E89AAA;
+  --pink-dark:    #A8435A;
+  --pink-xlight:  #F7D6DE;
+  --pink-glow:    rgba(212,99,122,0.14);
+  --white:        #FFFFFF;
+  --off-white:    #FDF8F9;
+  --blush:        #FAF0F3;
+  --blush-deep:   #F3DDE4;
+  --dark:         #1E0A12;
+  --dark-text:    #2C1520;
+  --mid-text:     #6A4050;
+  --light-text:   #A08090;
+  --muted-text:   #C0A0AC;
+  --border:       rgba(212,99,122,0.18);
+  --border-light: rgba(212,99,122,0.10);
+  --radius:       2px;
+}
+
+*,*::before,*::after { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior:smooth; overflow-x:hidden; font-size:16px; }
+
+body {
+  font-family:'Cormorant Garamond',Georgia,serif;
+  background:var(--white);
+  color:var(--dark-text);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+img { display:block; max-width:100%; }
+a { text-decoration:none; }
+button { cursor:pointer; border:none; outline:none; background:none; }
+ul { list-style:none; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--blush); }
+::-webkit-scrollbar-thumb { background:var(--pink); border-radius:4px; }
+
+/* ======================================================
+   GRAIN
+====================================================== */
+.grain {
+  position:fixed; inset:0; pointer-events:none; z-index:9000;
+  opacity:0.018;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ======================================================
+   NAV
+====================================================== */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:8000;
+  padding:28px 70px;
+  display:flex; align-items:center; justify-content:space-between;
+  transition:all 0.5s ease;
+}
+
+nav.scrolled {
+  background:rgba(255,255,255,0.95);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  padding:16px 70px;
+  border-bottom:1px solid var(--border-light);
+  box-shadow:0 2px 30px rgba(212,99,122,0.08);
+}
+
+.nav-logo img {
+  height:52px;
+  transition:height 0.4s ease;
+  filter:brightness(0);
+}
+nav.scrolled .nav-logo img { height:38px; }
+
+/* On hero (transparent nav) logo should be white/visible */
+.nav-logo-hero img { filter:brightness(10); }
+
+.nav-links {
+  display:flex; align-items:center; gap:44px;
+}
+
+.nav-links a {
+  font-family:'Raleway',sans-serif;
+  font-size:11px; font-weight:400;
+  letter-spacing:3.5px; text-transform:uppercase;
+  color:rgba(255,255,255,0.85);
+  position:relative; padding:4px 0;
+  transition:color 0.3s;
+}
+
+nav.scrolled .nav-links a {
+  color:var(--mid-text);
+}
+
+.nav-links a::after {
+  content:''; position:absolute; bottom:-2px; left:0;
+  width:0; height:1px; background:var(--pink);
+  transition:width 0.4s ease;
+}
+.nav-links a:hover { color:var(--pink); }
+.nav-links a:hover::after { width:100%; }
+
+nav.scrolled .nav-links a:hover { color:var(--pink); }
+
+.nav-reserve {
+  padding:11px 28px !important;
+  border:1px solid rgba(255,255,255,0.7) !important;
+  color:var(--white) !important;
+  border-radius:var(--radius);
+  transition:all 0.4s ease !important;
+}
+nav.scrolled .nav-reserve {
+  border-color:var(--pink) !important;
+  color:var(--pink) !important;
+}
+.nav-reserve:hover {
+  background:var(--white) !important;
+  color:var(--pink) !important;
+  border-color:var(--white) !important;
+}
+nav.scrolled .nav-reserve:hover {
+  background:var(--pink) !important;
+  color:var(--white) !important;
+}
+.nav-reserve::after { display:none !important; }
+
+/* Hamburger */
+.hamburger {
+  display:none; flex-direction:column; gap:6px;
+  cursor:pointer; z-index:8100; padding:4px;
+}
+.hamburger span {
+  display:block; width:26px; height:1.5px;
+  background:var(--white); transition:all 0.35s ease;
+  transform-origin:center;
+}
+nav.scrolled .hamburger span { background:var(--dark-text); }
+.hamburger.open span { background:var(--dark-text) !important; }
+.hamburger.open span:nth-child(1) { transform:translateY(7.5px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity:0; transform:scaleX(0); }
+.hamburger.open span:nth-child(3) { transform:translateY(-7.5px) rotate(-45deg); }
+
+/* Mobile drawer */
+.mobile-menu {
+  display:none; position:fixed; inset:0; z-index:8050;
+  background:rgba(253,240,243,0.98);
+  backdrop-filter:blur(20px);
+  flex-direction:column; align-items:center; justify-content:center; gap:36px;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a {
+  font-family:'Raleway',sans-serif; font-size:13px;
+  letter-spacing:6px; text-transform:uppercase;
+  color:var(--dark-text); transition:color 0.3s;
+}
+.mobile-menu a:hover { color:var(--pink); }
+
+/* ======================================================
+   HERO
+====================================================== */
+.hero {
+  position:relative; height:100vh; min-height:700px;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center; overflow:hidden;
+}
+
+.hero-bg {
+  position:absolute; inset:0; will-change:transform;
+  background:
+    linear-gradient(to bottom,
+      rgba(20,5,10,0.35) 0%,
+      rgba(20,5,10,0.1) 35%,
+      rgba(20,5,10,0.35) 70%,
+      rgba(20,5,10,0.82) 100%
+    ),
+    url('./restaurant.jpg')
+    center/cover no-repeat;
+  transform:scale(1.06);
+  animation:heroZoom 24s ease-in-out infinite alternate;
+}
+
+/* subtle pink tint over hero */
+.hero-bg::after {
+  content:'';
+  position:absolute; inset:0;
+  background:linear-gradient(135deg,rgba(212,99,122,0.18) 0%,transparent 60%);
+  pointer-events:none;
+}
+
+@keyframes heroZoom {
+  from { transform:scale(1.06); }
+  to   { transform:scale(1.13); }
+}
+
+.hero-content {
+  position:relative; z-index:2;
+  display:flex; flex-direction:column; align-items:center;
+}
+
+.hero-content > * {
+  opacity:0; transform:translateY(28px);
+  animation:heroIn 1.1s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.hero-content > *:nth-child(1) { animation-delay:0.20s; }
+.hero-content > *:nth-child(2) { animation-delay:0.36s; }
+.hero-content > *:nth-child(3) { animation-delay:0.50s; }
+.hero-content > *:nth-child(4) { animation-delay:0.64s; }
+.hero-content > *:nth-child(5) { animation-delay:0.76s; }
+.hero-content > *:nth-child(6) { animation-delay:0.88s; }
+.hero-content > *:nth-child(7) { animation-delay:1.00s; }
+
+@keyframes heroIn {
+  to { opacity:1; transform:translateY(0); }
+}
+
+.hero-eyebrow {
+  font-family:'Raleway',sans-serif;
+  font-size:11px; font-weight:300;
+  letter-spacing:8px; text-transform:uppercase;
+  color:var(--white); margin-bottom:18px;
+}
+
+.hero-rule {
+  width:56px; height:1px;
+  background:linear-gradient(90deg,transparent,var(--pink-light),transparent);
+  margin-bottom:24px;
+}
+
+.hero-title {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(56px,10vw,130px);
+  font-weight:400; line-height:0.95;
+  letter-spacing:-1px; color:var(--white);
+  margin-bottom:10px;
+}
+
+.hero-italic {
+  font-family:'Playfair Display',serif;
+  font-style:italic; font-weight:300;
+  font-size:clamp(16px,2.5vw,28px);
+  color:var(--pink-light); margin-bottom:16px;
+}
+
+.hero-location {
+  font-family:'Raleway',sans-serif;
+  font-size:11px; letter-spacing:5px; text-transform:uppercase;
+  color:rgba(255,255,255,0.55); margin-bottom:46px;
+}
+
+.hero-btns {
+  display:flex; gap:16px; flex-wrap:wrap; justify-content:center;
+}
+
+.btn-pink {
+  display:inline-block; padding:16px 52px;
+  background:var(--pink);
+  color:var(--white);
+  font-family:'Raleway',sans-serif; font-size:11px;
+  font-weight:600; letter-spacing:4px; text-transform:uppercase;
+  border-radius:var(--radius); border:1px solid var(--pink);
+  transition:all 0.4s ease;
+}
+.btn-pink:hover {
+  background:var(--pink-dark);
+  border-color:var(--pink-dark);
+  box-shadow:0 8px 40px rgba(212,99,122,0.35);
+  transform:translateY(-2px);
+}
+
+.btn-outline-white {
+  display:inline-block; padding:16px 52px;
+  background:transparent; color:var(--white);
+  font-family:'Raleway',sans-serif; font-size:11px;
+  font-weight:400; letter-spacing:4px; text-transform:uppercase;
+  border:1px solid rgba(255,255,255,0.5);
+  border-radius:var(--radius);
+  transition:all 0.4s ease;
+}
+.btn-outline-white:hover {
+  border-color:var(--white);
+  background:rgba(255,255,255,0.12);
+  transform:translateY(-2px);
+}
+
+.btn-outline-pink {
+  display:inline-block; padding:16px 52px;
+  background:transparent; color:var(--pink);
+  font-family:'Raleway',sans-serif; font-size:11px;
+  font-weight:400; letter-spacing:4px; text-transform:uppercase;
+  border:1px solid var(--pink);
+  border-radius:var(--radius);
+  transition:all 0.4s ease;
+}
+.btn-outline-pink:hover {
+  background:var(--pink);
+  color:var(--white);
+  box-shadow:0 8px 30px rgba(212,99,122,0.25);
+  transform:translateY(-2px);
+}
+
+.hero-scroll {
+  position:absolute; bottom:48px; left:50%;
+  transform:translateX(-50%);
+  z-index:2; display:flex; flex-direction:column; align-items:center; gap:10px;
+  opacity:0; animation:heroIn 1.1s 1.2s forwards;
+}
+.hero-scroll span {
+  font-family:'Raleway',sans-serif; font-size:9px;
+  letter-spacing:4px; text-transform:uppercase; color:rgba(255,255,255,0.5);
+}
+.scroll-bar {
+  width:1px; height:48px;
+  background:linear-gradient(to bottom,var(--pink-light),transparent);
+  animation:scrollPulse 2.2s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%,100% { opacity:0.2; transform:scaleY(1); }
+  50% { opacity:1; transform:scaleY(1.2); }
+}
+
+/* ======================================================
+   SHARED UTILITIES
+====================================================== */
+.section-pad { padding:130px 80px; }
+.section-pad-sm { padding:90px 80px; }
+
+.label {
+  font-family:'Raleway',sans-serif;
+  font-size:10px; font-weight:400;
+  letter-spacing:6px; text-transform:uppercase;
+  color:var(--pink); margin-bottom:18px;
+}
+
+.heading {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(36px,4.5vw,60px);
+  font-weight:400; line-height:1.15;
+  color:var(--dark-text);
+  margin-bottom:24px;
+}
+
+.body-text {
+  font-size:19px; font-weight:300;
+  line-height:1.85; color:var(--mid-text);
+  max-width:600px;
+}
+
+.rule {
+  width:48px; height:1px;
+  background:var(--pink);
+  margin:28px 0;
+}
+.rule-center { margin:28px auto; }
+
+/* Reveal */
+.reveal {
+  opacity:0; transform:translateY(36px);
+  transition:opacity 0.85s cubic-bezier(.22,.61,.36,1),
+             transform 0.85s cubic-bezier(.22,.61,.36,1);
+}
+.reveal.left  { transform:translateX(-36px); }
+.reveal.right { transform:translateX(36px); }
+.reveal.scale { transform:scale(0.94); }
+.reveal.visible {
+  opacity:1; transform:translate(0) scale(1);
+}
+
+/* ======================================================
+   ABOUT
+====================================================== */
+.about {
+  background:var(--white);
+  display:grid; grid-template-columns:1fr 1fr; gap:0;
+  overflow:hidden;
+}
+
+.about-visual {
+  position:relative; min-height:680px; overflow:hidden;
+}
+.about-visual img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform 0.9s ease;
+  filter:brightness(0.92) saturate(1.05);
+}
+.about-visual:hover img { transform:scale(1.04); }
+
+.about-visual-badge {
+  position:absolute; bottom:40px; right:-1px;
+  background:var(--pink); padding:28px 36px;
+}
+.about-visual-badge .num {
+  font-family:'Playfair Display',serif;
+  font-size:44px; color:var(--white); line-height:1;
+}
+.about-visual-badge .lbl {
+  font-family:'Raleway',sans-serif;
+  font-size:10px; letter-spacing:3px; text-transform:uppercase;
+  color:rgba(255,255,255,0.75); margin-top:6px;
+}
+
+.about-content {
+  padding:100px 80px;
+  background:var(--off-white);
+  display:flex; flex-direction:column; justify-content:center;
+}
+
+.about-stats {
+  display:flex; gap:0; margin-top:50px;
+  border-top:1px solid var(--border);
+  padding-top:36px;
+}
+.stat {
+  flex:1; padding:0 28px; text-align:center;
+  border-right:1px solid var(--border);
+}
+.stat:first-child { padding-left:0; }
+.stat:last-child { border-right:none; }
+.stat-num {
+  font-family:'Playfair Display',serif;
+  font-size:40px; color:var(--pink); font-weight:400; line-height:1;
+}
+.stat-lbl {
+  font-family:'Raleway',sans-serif;
+  font-size:9px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--muted-text); margin-top:8px;
+}
+
+/* ======================================================
+   FEATURES STRIP
+====================================================== */
+.features {
+  background:var(--blush);
+  padding:0 80px;
+  display:grid; grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border-light);
+  border-bottom:1px solid var(--border-light);
+}
+
+.feature-item {
+  padding:60px 40px; text-align:center;
+  border-right:1px solid var(--border-light);
+  transition:background 0.4s;
+}
+.feature-item:last-child { border-right:none; }
+.feature-item:hover { background:rgba(212,99,122,0.06); }
+
+.feature-icon { font-size:30px; margin-bottom:18px; display:block; }
+.feature-title {
+  font-family:'Raleway',sans-serif;
+  font-size:10px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--pink); margin-bottom:10px;
+}
+.feature-desc { font-size:16px; color:var(--light-text); font-weight:300; line-height:1.6; }
+
+/* ======================================================
+   GALLERY
+====================================================== */
+.gallery-section {
+  background:var(--white);
+  padding:130px 80px; text-align:center;
+}
+
+.gallery-grid {
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
+  max-width:1200px; margin:60px auto 0;
+}
+.gallery-item:first-child { grid-row:span 2; }
+
+.gallery-item {
+  position:relative; overflow:hidden;
+  background:var(--blush); cursor:pointer;
+  min-height:280px;
+}
+.gallery-item img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform 0.7s ease, filter 0.7s ease;
+  filter:brightness(0.9) saturate(1.05);
+}
+.gallery-item:hover img {
+  transform:scale(1.07); filter:brightness(1) saturate(1.1);
+}
+
+.gallery-placeholder {
+  position:absolute; inset:0;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center; gap:14px;
+  background:linear-gradient(135deg,var(--blush) 0%,var(--blush-deep) 100%);
+}
+.gallery-placeholder svg {
+  width:44px; height:44px;
+  stroke:var(--pink); fill:none;
+  stroke-width:1.2; opacity:0.5;
+}
+.gallery-placeholder .ph-name {
+  font-family:'Playfair Display',serif;
+  font-style:italic; font-size:17px;
+  color:var(--mid-text); line-height:1.4;
+}
+.gallery-placeholder .ph-label {
+  font-family:'Raleway',sans-serif;
+  font-size:9px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--muted-text);
+}
+
+.gallery-item-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(168,67,90,0.75) 0%,transparent 55%);
+  opacity:0; transition:opacity 0.4s;
+  display:flex; align-items:flex-end; justify-content:center; padding:24px;
+}
+.gallery-item:hover .gallery-item-overlay { opacity:1; }
+.gallery-overlay-text {
+  font-family:'Raleway',sans-serif;
+  font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--white);
+}
+
+/* ======================================================
+   MENU
+====================================================== */
+.menu-section {
+  background:var(--off-white);
+  padding:130px 80px; text-align:center;
+}
+
+.lang-toggle {
+  display:inline-flex; gap:0; margin-bottom:50px;
+  border:1px solid var(--border); border-radius:var(--radius);
+  overflow:hidden;
+}
+.lang-btn {
+  padding:12px 34px;
+  font-family:'Raleway',sans-serif; font-size:10px;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--light-text); background:transparent;
+  transition:all 0.3s;
+  border-right:1px solid var(--border);
+}
+.lang-btn:last-child { border-right:none; }
+.lang-btn.active, .lang-btn:hover {
+  background:var(--pink-glow); color:var(--pink);
+}
+
+.menu-grid {
+  display:grid; grid-template-columns:repeat(3,1fr); gap:4px;
+  max-width:1100px; margin:0 auto 50px;
+}
+
+.menu-item {
+  position:relative; overflow:hidden;
+  aspect-ratio:3/4; cursor:pointer;
+  background:var(--blush);
+}
+.menu-item img {
+  width:100%; height:100%; object-fit:cover;
+  transition:transform 0.6s ease, filter 0.6s ease;
+  filter:brightness(0.9);
+}
+.menu-item:hover img { transform:scale(1.05); filter:brightness(1); }
+
+.menu-item-overlay {
+  position:absolute; inset:0;
+  background:linear-gradient(to top,rgba(168,67,90,0.6) 0%,transparent 55%);
+  opacity:0; transition:opacity 0.4s;
+  display:flex; align-items:flex-end; justify-content:center; padding:20px;
+}
+.menu-item:hover .menu-item-overlay { opacity:1; }
+.menu-overlay-label {
+  font-family:'Raleway',sans-serif;
+  font-size:9px; letter-spacing:3px; text-transform:uppercase; color:var(--white);
+}
+
+/* ======================================================
+   BOOKING
+====================================================== */
+.booking-section {
+  background:var(--blush);
+  padding:130px 80px; position:relative; overflow:hidden;
+}
+
+.booking-section::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--pink),transparent);
+}
+.booking-section::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--pink),transparent);
+}
+
+.booking-inner {
+  max-width:1100px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1.6fr; gap:90px; align-items:start;
+}
+
+.booking-detail {
+  margin-top:44px; display:flex; flex-direction:column; gap:24px;
+}
+.booking-detail-item { display:flex; align-items:flex-start; gap:16px; }
+.booking-detail-icon {
+  width:36px; height:36px; flex-shrink:0;
+  border:1px solid var(--border); border-radius:50%;
+  background:var(--white);
+  display:flex; align-items:center; justify-content:center;
+  font-size:15px;
+}
+.booking-detail-label {
+  font-family:'Raleway',sans-serif; font-size:9px;
+  letter-spacing:3px; text-transform:uppercase;
+  color:var(--pink); margin-bottom:4px;
+}
+.booking-detail-value {
+  font-size:16px; font-weight:300; color:var(--mid-text); line-height:1.5;
+}
+.booking-detail-value a {
+  color:var(--mid-text); transition:color 0.3s;
+}
+.booking-detail-value a:hover { color:var(--pink); }
+
+/* Form card */
+.booking-form {
+  background:var(--white);
+  border:1px solid var(--border-light);
+  padding:50px;
+  border-radius:var(--radius);
+  box-shadow:0 10px 60px rgba(212,99,122,0.08);
+}
+
+.form-row {
+  display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-bottom:20px;
+}
+.form-row.full { grid-template-columns:1fr; }
+.form-row.three { grid-template-columns:1fr 1fr 1fr; }
+
+.form-group { display:flex; flex-direction:column; gap:8px; }
+
+.form-label {
+  font-family:'Raleway',sans-serif; font-size:9px;
+  letter-spacing:3px; text-transform:uppercase; color:var(--pink);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  background:var(--off-white);
+  border:1px solid var(--border);
+  color:var(--dark-text);
+  font-family:'Cormorant Garamond',serif; font-size:17px; font-weight:300;
+  padding:13px 16px;
+  border-radius:var(--radius);
+  transition:border-color 0.3s, background 0.3s, box-shadow 0.3s;
+  outline:none; width:100%;
+  -webkit-appearance:none;
+}
+.form-input::placeholder { color:var(--muted-text); }
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color:var(--pink);
+  background:var(--white);
+  box-shadow:0 0 0 3px rgba(212,99,122,0.1);
+}
+
+.form-select {
+  cursor:pointer;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23D4637A' d='M0 0l5 6 5-6z'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 16px center;
+  background-color:var(--off-white);
+  padding-right:40px;
+}
+.form-select option { background:var(--white); color:var(--dark-text); }
+
+.form-textarea {
+  resize:vertical; min-height:110px; line-height:1.6;
+}
+
+.form-divider {
+  height:1px; background:var(--border-light); margin:28px 0;
+}
+
+.form-submit {
+  width:100%; padding:18px;
+  background:var(--pink);
+  color:var(--white);
+  font-family:'Raleway',sans-serif; font-size:11px;
+  font-weight:600; letter-spacing:5px; text-transform:uppercase;
+  border-radius:var(--radius);
+  transition:all 0.4s ease;
+  cursor:pointer; border:1px solid var(--pink);
+}
+.form-submit:hover {
+  background:var(--pink-dark);
+  border-color:var(--pink-dark);
+  box-shadow:0 8px 40px rgba(212,99,122,0.3);
+  transform:translateY(-2px);
+}
+
+.form-note {
+  text-align:center; margin-top:16px;
+  font-family:'Raleway',sans-serif; font-size:10px;
+  letter-spacing:1px; color:var(--muted-text); line-height:1.6;
+}
+
+.form-success {
+  display:none; text-align:center; padding:40px 20px;
+}
+.form-success .check-icon {
+  width:64px; height:64px; margin:0 auto 24px;
+  background:var(--blush); border:1px solid var(--pink);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  color:var(--pink); font-size:26px;
+}
+.form-success h3 {
+  font-family:'Playfair Display',serif; font-size:28px;
+  font-weight:400; margin-bottom:12px; color:var(--dark-text);
+}
+.form-success p {
+  font-size:17px; font-weight:300; color:var(--mid-text); line-height:1.7;
+}
+.form-reset-btn {
+  margin-top:24px; padding:12px 32px;
+  border:1px solid var(--border); color:var(--pink);
+  font-family:'Raleway',sans-serif; font-size:10px;
+  letter-spacing:3px; text-transform:uppercase;
+  background:none; cursor:pointer; transition:all 0.3s;
+  border-radius:var(--radius);
+}
+.form-reset-btn:hover {
+  border-color:var(--pink);
+  background:var(--pink-glow);
+}
+
+/* ======================================================
+   TESTIMONIALS
+====================================================== */
+.testimonials {
+  background:var(--white);
+  padding:140px 80px; text-align:center;
+  position:relative; overflow:hidden;
+}
+
+.testimonials-bg {
+  position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(ellipse 80% 60% at 50% 50%,rgba(212,99,122,0.05) 0%,transparent 70%);
+}
+
+.testimonials-bg-quote {
+  position:absolute; top:20px; left:50%; transform:translateX(-50%);
+  font-family:'Playfair Display',serif; font-size:320px;
+  color:var(--pink); opacity:0.04; line-height:1;
+  pointer-events:none; user-select:none;
+}
+
+.testimonial-wrapper { max-width:780px; margin:0 auto; position:relative; }
+
+.testimonial-slide { display:none; animation:fadeSlide 0.7s ease; }
+.testimonial-slide.active { display:block; }
+
+@keyframes fadeSlide {
+  from { opacity:0; transform:translateY(12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.testimonial-stars {
+  display:flex; justify-content:center; gap:6px; margin-bottom:28px;
+}
+.testimonial-stars span { color:var(--pink); font-size:16px; }
+
+.t-quote {
+  font-family:'Playfair Display',serif; font-style:italic;
+  font-size:clamp(19px,2.5vw,26px); font-weight:400;
+  line-height:1.75; color:var(--dark-text); margin-bottom:32px;
+}
+
+.t-author {
+  font-family:'Raleway',sans-serif; font-size:10px;
+  letter-spacing:5px; text-transform:uppercase; color:var(--pink);
+  margin-bottom:4px;
+}
+.t-source {
+  font-family:'Raleway',sans-serif; font-size:10px;
+  letter-spacing:2px; color:var(--muted-text);
+}
+
+.t-dots { display:flex; justify-content:center; gap:10px; margin-top:44px; }
+.t-dot {
+  width:7px; height:7px; border-radius:50%;
+  background:var(--blush-deep); cursor:pointer;
+  transition:all 0.35s; border:none;
+}
+.t-dot.active {
+  background:var(--pink);
+  box-shadow:0 0 12px rgba(212,99,122,0.4);
+  transform:scale(1.2);
+}
+
+/* ======================================================
+   INSTAGRAM
+====================================================== */
+.instagram-section {
+  background:var(--blush);
+  padding:90px 80px; text-align:center;
+  border-top:1px solid var(--border-light);
+  border-bottom:1px solid var(--border-light);
+}
+.instagram-handle {
+  display:inline-flex; align-items:center; gap:14px;
+  padding:16px 40px;
+  border:1px solid var(--border);
+  color:var(--dark-text);
+  font-family:'Raleway',sans-serif; font-size:12px; letter-spacing:3px;
+  transition:all 0.4s; border-radius:var(--radius);
+  background:var(--white);
+}
+.instagram-handle:hover {
+  border-color:var(--pink); color:var(--pink);
+  box-shadow:0 6px 30px rgba(212,99,122,0.15);
+}
+.instagram-handle svg { width:18px; height:18px; fill:currentColor; }
+
+/* ======================================================
+   CONTACT
+====================================================== */
+.contact {
+  background:var(--white);
+  display:grid; grid-template-columns:1fr 1fr;
+}
+
+.contact-left {
+  padding:110px 80px;
+  display:flex; flex-direction:column; justify-content:center;
+  border-right:1px solid var(--border-light);
+  background:var(--off-white);
+}
+
+.contact-items { margin-top:40px; }
+.contact-item { margin-bottom:38px; }
+.contact-item-label {
+  font-family:'Raleway',sans-serif; font-size:9px;
+  letter-spacing:5px; text-transform:uppercase;
+  color:var(--pink); margin-bottom:10px;
+}
+.contact-item-value {
+  font-size:18px; font-weight:300; color:var(--dark-text); line-height:1.7;
+}
+.contact-item-value a { color:var(--dark-text); transition:color 0.3s; }
+.contact-item-value a:hover { color:var(--pink); }
+
+.contact-right { position:relative; min-height:560px; overflow:hidden; }
+.contact-right iframe {
+  position:absolute; inset:0; width:100%; height:100%; border:0;
+  filter:grayscale(0.3) brightness(0.95) contrast(1.05) saturate(0.8);
+  transition:filter 0.5s;
+}
+.contact-right:hover iframe { filter:grayscale(0) brightness(1) contrast(1); }
+
+/* ======================================================
+   FOOTER
+====================================================== */
+footer {
+  background:var(--dark);
+  padding:44px 80px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+footer img { height:34px; filter:brightness(10); opacity:0.75; }
+.footer-copy {
+  font-family:'Raleway',sans-serif; font-size:10px;
+  letter-spacing:2px; color:rgba(255,255,255,0.35);
+}
+.footer-links { display:flex; gap:28px; }
+.footer-links a {
+  font-family:'Raleway',sans-serif; font-size:10px;
+  letter-spacing:2px; text-transform:uppercase;
+  color:rgba(255,255,255,0.35); transition:color 0.3s;
+}
+.footer-links a:hover { color:var(--pink-light); }
+
+/* ======================================================
+   LIGHTBOX
+====================================================== */
+.lightbox {
+  display:none; position:fixed; inset:0; z-index:10000;
+  background:rgba(30,10,18,0.95);
+  justify-content:center; align-items:center;
+}
+.lightbox.open { display:flex; }
+.lightbox-img {
+  max-width:92vw; max-height:92vh; object-fit:contain;
+  box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  animation:lbIn 0.4s cubic-bezier(.22,.61,.36,1);
+}
+@keyframes lbIn {
+  from { opacity:0; transform:scale(0.92); }
+  to   { opacity:1; transform:scale(1); }
+}
+.lightbox-close {
+  position:absolute; top:28px; right:32px;
+  font-family:'Raleway',sans-serif; font-size:28px; font-weight:200;
+  color:rgba(255,255,255,0.7); cursor:pointer; transition:color 0.3s; z-index:10001;
+}
+.lightbox-close:hover { color:var(--pink-light); }
+.lightbox-arrow {
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:none; border:1px solid rgba(255,255,255,0.2); color:rgba(255,255,255,0.7);
+  width:50px; height:50px; border-radius:50%;
+  font-size:18px; display:flex; align-items:center; justify-content:center;
+  cursor:pointer; transition:all 0.3s; z-index:10001;
+}
+.lightbox-arrow:hover { border-color:var(--pink-light); color:var(--pink-light); }
+.lightbox-prev { left:24px; }
+.lightbox-next { right:24px; }
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+@media (max-width:1200px) {
+  .booking-inner { grid-template-columns:1fr; gap:50px; }
+}
+
+@media (max-width:1024px) {
+  .section-pad { padding:90px 50px; }
+  nav { padding:20px 40px; }
+  nav.scrolled { padding:14px 40px; }
+  .about { grid-template-columns:1fr; }
+  .about-visual { min-height:420px; }
+  .about-content { padding:60px 50px; }
+  .features { grid-template-columns:repeat(2,1fr); padding:0 50px; }
+  .gallery-grid { grid-template-columns:repeat(2,1fr); }
+  .gallery-item:first-child { grid-row:span 1; }
+  .contact { grid-template-columns:1fr; }
+  .contact-left { padding:70px 50px; border-right:none; border-bottom:1px solid var(--border-light); }
+  .contact-right { min-height:380px; }
+  footer { padding:36px 40px; }
+  .booking-section { padding:90px 50px; }
+  .booking-form { padding:36px; }
+}
+
+@media (max-width:768px) {
+  nav { padding:16px 24px; }
+  nav.scrolled { padding:12px 24px; }
+  .nav-links { display:none; }
+  .hamburger { display:flex; }
+  .section-pad { padding:70px 24px; }
+  .gallery-section { padding:70px 24px; }
+  .gallery-grid { grid-template-columns:1fr 1fr; }
+  .menu-section { padding:70px 24px; }
+  .menu-grid { grid-template-columns:1fr 1fr; }
+  .booking-section { padding:70px 24px; }
+  .booking-form { padding:28px 22px; }
+  .form-row { grid-template-columns:1fr; }
+  .form-row.three { grid-template-columns:1fr; }
+  .testimonials { padding:80px 24px; }
+  .instagram-section { padding:60px 24px; }
+  .contact-left { padding:50px 24px; }
+  footer { flex-direction:column; gap:16px; text-align:center; padding:28px 24px; }
+  .footer-links { justify-content:center; }
+  .about-content { padding:50px 24px; }
+  .features { padding:0 24px; }
+}
+
+@media (max-width:480px) {
+  .hero-btns { flex-direction:column; align-items:center; }
+  .features { grid-template-columns:1fr; }
+  .gallery-grid { grid-template-columns:1fr; }
+  .menu-grid { grid-template-columns:1fr; }
+  .about-stats { flex-direction:column; gap:0; }
+  .stat { border-right:none; border-bottom:1px solid var(--border-light); padding:16px 0; }
+}
+
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+  <button class="lightbox-arrow lightbox-prev" onclick="lightboxNav(-1)">&#8592;</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="" />
+  <button class="lightbox-arrow lightbox-next" onclick="lightboxNav(1)">&#8594;</button>
+</div>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#gallery" onclick="closeMenu()">Gallery</a>
+  <a href="#menu" onclick="closeMenu()">Menu</a>
+  <a href="#book" onclick="closeMenu()">Reserve</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav id="navbar">
+  <div class="nav-logo" id="navLogo">
+    <a href="#"><img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688c7757ea6d0f7cc510f337.png" alt="Villa Velha" /></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#book" class="nav-reserve">Reserve a Table</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Alvor &nbsp;&middot;&nbsp; Algarve &nbsp;&middot;&nbsp; Portugal</p>
+    <div class="hero-rule"></div>
+    <h1 class="hero-title">Villa Velha</h1>
+    <p class="hero-italic">by Alberto Punset</p>
+    <p class="hero-location">European &amp; Mediterranean Cuisine</p>
+    <div class="hero-btns">
+      <a href="#book" class="btn-pink">Reserve a Table</a>
+      <a href="#menu" class="btn-outline-white">View the Menu</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Discover</span>
+    <div class="scroll-bar"></div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section class="about" id="about">
+  <div class="about-visual reveal left">
+    <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/68bedf9c966de8ee8b53b7e1.png" alt="Villa Velha Interior" />
+    <div class="about-visual-badge">
+      <div class="num">26+</div>
+      <div class="lbl">Years of Mastery</div>
+    </div>
+  </div>
+
+  <div class="about-content reveal right">
+    <p class="label">Our Story</p>
+    <h2 class="heading">Welcome to<br>Villa Velha</h2>
+    <div class="rule"></div>
+    <p class="body-text">
+      Nestled in the charming heart of Alvor, Villa Velha is a celebration of flavour, craftsmanship, and coastal warmth. With spectacular ratings on Restaurant Guru and glowing praise across TripAdvisor, this is where passion meets Portuguese charm.
+    </p>
+    <br>
+    <p class="body-text">
+      Chef Alberto Punset brings over 26 years of international experience spanning Spain, London, Sweden, and Switzerland — including time in Michelin-recognised kitchens — to create a menu that fuses the finest Atlantic produce with bold European imagination.
+    </p>
+    <br>
+    <p class="body-text">
+      Whether you're celebrating a milestone or simply craving something extraordinary, Villa Velha welcomes you as part of the family.
+    </p>
+
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-num">26+</div>
+        <div class="stat-lbl">Years Experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-lbl">Countries</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">4.8</div>
+        <div class="stat-lbl">TripAdvisor</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<div class="features">
+  <div class="feature-item reveal">
+    <span class="feature-icon">🍽️</span>
+    <div class="feature-title">Fine Dining</div>
+    <div class="feature-desc">Mediterranean mastery on every plate</div>
+  </div>
+  <div class="feature-item reveal">
+    <span class="feature-icon">🍷</span>
+    <div class="feature-title">Wine Selection</div>
+    <div class="feature-desc">Curated Portuguese & European wines</div>
+  </div>
+  <div class="feature-item reveal">
+    <span class="feature-icon">🌅</span>
+    <div class="feature-title">Alvor Charm</div>
+    <div class="feature-desc">Intimate coastal atmosphere</div>
+  </div>
+  <div class="feature-item reveal">
+    <span class="feature-icon">👨‍🍳</span>
+    <div class="feature-title">Chef's Touch</div>
+    <div class="feature-desc">Alberto's personal creativity</div>
+  </div>
+</div>
+
+<!-- ===== GALLERY ===== -->
+<section class="gallery-section" id="gallery">
+  <p class="label reveal">From the Kitchen</p>
+  <h2 class="heading reveal">A Taste of What Awaits</h2>
+  <div class="rule rule-center reveal"></div>
+  <p class="body-text reveal" style="margin:0 auto; text-align:center;">
+    Every dish is a story — from the freshest Atlantic catch to hand-crafted Mediterranean creations. A visual feast before the real one begins.
+  </p>
+
+  <div class="gallery-grid" id="galleryGrid">
+
+    <div class="gallery-item reveal" data-index="0" onclick="openLightbox(0)">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
+        <div class="ph-name">Chef's Signature Starter</div>
+        <div class="ph-label">Photo coming soon</div>
+      </div>
+      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-index="1" onclick="openLightbox(1)">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
+        <div class="ph-name">Atlantic Octopus</div>
+        <div class="ph-label">Photo coming soon</div>
+      </div>
+      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-index="2" onclick="openLightbox(2)">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
+        <div class="ph-name">Tuna Tartare</div>
+        <div class="ph-label">Photo coming soon</div>
+      </div>
+      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-index="3" onclick="openLightbox(3)">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
+        <div class="ph-name">Seafood Paella</div>
+        <div class="ph-label">Photo coming soon</div>
+      </div>
+      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-index="4" onclick="openLightbox(4)">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
+        <div class="ph-name">Grilled Sea Bass</div>
+        <div class="ph-label">Photo coming soon</div>
+      </div>
+      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    </div>
+
+    <div class="gallery-item reveal" data-index="5" onclick="openLightbox(5)">
+      <div class="gallery-placeholder">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="3.5"/><path d="M9 3h6l1 2H8z"/></svg>
+        <div class="ph-name">Crème Brûlée</div>
+        <div class="ph-label">Photo coming soon</div>
+      </div>
+      <div class="gallery-item-overlay"><span class="gallery-overlay-text">View</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== MENU ===== -->
+<section class="menu-section" id="menu">
+  <p class="label reveal">Culinary Journey</p>
+  <h2 class="heading reveal">The Menu</h2>
+  <div class="rule rule-center reveal"></div>
+  <p class="body-text reveal" style="margin:0 auto 44px; text-align:center;">
+    From the freshest Atlantic seafood to inventive European creations. Click any page to enlarge.
+  </p>
+
+  <div class="lang-toggle reveal">
+    <button class="lang-btn active" onclick="showMenu('en',this)">English 🇬🇧</button>
+    <button class="lang-btn" onclick="showMenu('pt',this)">Português 🇵🇹</button>
+  </div>
+
+  <div id="menu-en" class="menu-grid reveal">
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e34974f59c8507d5fc611.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e34974f59c8507d5fc611.jpeg" alt="Menu Page 1" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Enlarge</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e384af2006b5c57f511f1.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e384af2006b5c57f511f1.jpeg" alt="Menu Page 2" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Enlarge</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e34971c1165219665f3ec.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e34971c1165219665f3ec.jpeg" alt="Menu Page 3" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Enlarge</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e349758ee9e70a6247f02.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e349758ee9e70a6247f02.jpeg" alt="Menu Page 4" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Enlarge</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348bf2006b7d58f50522.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348bf2006b7d58f50522.jpeg" alt="Menu Page 5" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Enlarge</span></div>
+    </div>
+  </div>
+
+  <div id="menu-pt" class="menu-grid reveal" style="display:none;">
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348c58ee9e927d247efb.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348c58ee9e927d247efb.jpeg" alt="Cardápio 1" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Ampliar</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e3497f2006b70b7f5052b.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e3497f2006b70b7f5052b.jpeg" alt="Cardápio 2" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Ampliar</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e34974f59c886555fc610.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e34974f59c886555fc610.jpeg" alt="Cardápio 3" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Ampliar</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e37801c11650c1765ff7c.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e37801c11650c1765ff7c.jpeg" alt="Cardápio 4" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Ampliar</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348c4f59c8a3fe5fc606.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348c4f59c8a3fe5fc606.jpeg" alt="Cardápio 5" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Ampliar</span></div>
+    </div>
+    <div class="menu-item" onclick="openLightboxSrc('https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348c1c1165ba2765f3de.jpeg')">
+      <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688e348c1c1165ba2765f3de.jpeg" alt="Cardápio 6" loading="lazy"/>
+      <div class="menu-item-overlay"><span class="menu-overlay-label">Ampliar</span></div>
+    </div>
+  </div>
+
+  <div class="reveal" style="margin-top:44px;">
+    <a href="#book" class="btn-pink">Reserve a Table</a>
+  </div>
+</section>
+
+<!-- ===== BOOKING ===== -->
+<section class="booking-section" id="book">
+  <div class="booking-inner">
+
+    <div class="booking-info reveal left">
+      <p class="label">Reservations</p>
+      <h2 class="heading">Reserve<br>Your Table</h2>
+      <div class="rule"></div>
+      <p class="body-text">
+        Join us for an unforgettable evening at Villa Velha. Fill in your details and we will confirm your reservation by email within 24 hours.
+      </p>
+
+      <div class="booking-detail">
+        <div class="booking-detail-item">
+          <div class="booking-detail-icon">🕐</div>
+          <div>
+            <div class="booking-detail-label">Opening Hours</div>
+            <div class="booking-detail-value">Monday – Saturday<br>5:00 PM – 9:00 PM<br>Sunday: Closed</div>
+          </div>
+        </div>
+        <div class="booking-detail-item">
+          <div class="booking-detail-icon">📍</div>
+          <div>
+            <div class="booking-detail-label">Address</div>
+            <div class="booking-detail-value">R. Poe. João de Deus 13<br>8500-026 Alvor, Portugal</div>
+          </div>
+        </div>
+        <div class="booking-detail-item">
+          <div class="booking-detail-icon">📞</div>
+          <div>
+            <div class="booking-detail-label">Phone</div>
+            <div class="booking-detail-value"><a href="tel:+531964399795">+531 964 399 795</a></div>
+          </div>
+        </div>
+        <div class="booking-detail-item">
+          <div class="booking-detail-icon">✉️</div>
+          <div>
+            <div class="booking-detail-label">Email</div>
+            <div class="booking-detail-value"><a href="mailto:villavelhaalvor@gmail.com">villavelhaalvor@gmail.com</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="booking-form reveal right" id="bookingFormWrap">
+      <div id="formContent">
+        <div style="margin-bottom:32px;">
+          <p class="label">Your Information</p>
+          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--dark-text);">Make a Reservation</h3>
+        </div>
+
+        <form id="bookingForm" onsubmit="submitBooking(event)" novalidate>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="firstName">First Name *</label>
+              <input class="form-input" type="text" id="firstName" name="firstName" placeholder="Your first name" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="lastName">Last Name *</label>
+              <input class="form-input" type="text" id="lastName" name="lastName" placeholder="Your last name" required />
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="email">Email Address *</label>
+              <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="phone">Phone Number *</label>
+              <input class="form-input" type="tel" id="phone" name="phone" placeholder="+1 000 000 0000" required />
+            </div>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <div class="form-row three">
+            <div class="form-group">
+              <label class="form-label" for="date">Date *</label>
+              <input class="form-input" type="date" id="date" name="date" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="time">Preferred Time *</label>
+              <select class="form-select" id="time" name="time" required>
+                <option value="" disabled selected>Select time</option>
+                <option value="17:00">5:00 PM</option>
+                <option value="17:30">5:30 PM</option>
+                <option value="18:00">6:00 PM</option>
+                <option value="18:30">6:30 PM</option>
+                <option value="19:00">7:00 PM</option>
+                <option value="19:30">7:30 PM</option>
+                <option value="20:00">8:00 PM</option>
+                <option value="20:30">8:30 PM</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="guests">Guests *</label>
+              <select class="form-select" id="guests" name="guests" required>
+                <option value="" disabled selected>How many?</option>
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5">5 Guests</option>
+                <option value="6">6 Guests</option>
+                <option value="7">7 Guests</option>
+                <option value="8">8 Guests</option>
+                <option value="9+">9+ Guests</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label" for="occasion">Special Occasion</label>
+              <select class="form-select" id="occasion" name="occasion">
+                <option value="">No special occasion</option>
+                <option value="birthday">Birthday</option>
+                <option value="anniversary">Anniversary</option>
+                <option value="proposal">Proposal / Engagement</option>
+                <option value="business">Business Dinner</option>
+                <option value="celebration">General Celebration</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label" for="dietary">Dietary Requirements</label>
+              <select class="form-select" id="dietary" name="dietary">
+                <option value="">None</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten-free">Gluten Free</option>
+                <option value="nut-allergy">Nut Allergy</option>
+                <option value="shellfish-allergy">Shellfish Allergy</option>
+                <option value="lactose-free">Lactose Free</option>
+                <option value="other">Other (specify below)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row full">
+            <div class="form-group">
+              <label class="form-label" for="notes">Additional Requests</label>
+              <textarea class="form-textarea" id="notes" name="notes" placeholder="Any special requests, allergies, or notes for us…"></textarea>
+            </div>
+          </div>
+
+          <div class="form-divider"></div>
+
+          <button type="submit" class="form-submit">Confirm Reservation</button>
+
+          <p class="form-note">
+            We will send a confirmation to your email within 24 hours.<br>
+            For same-day bookings please call us directly.
+          </p>
+        </form>
+      </div>
+
+      <!-- Success -->
+      <div class="form-success" id="formSuccess">
+        <div class="check-icon">✓</div>
+        <h3>Reservation Received</h3>
+        <p>Thank you! We have received your reservation request and will send a confirmation to your email within 24 hours. We look forward to welcoming you to Villa Velha.</p>
+        <button class="form-reset-btn" onclick="resetForm()">Make Another Reservation</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section class="testimonials" id="testimonials">
+  <div class="testimonials-bg"></div>
+  <div class="testimonials-bg-quote">&ldquo;</div>
+
+  <p class="label reveal">Guest Experiences</p>
+  <h2 class="heading reveal">What Our Guests Say</h2>
+  <div class="rule rule-center reveal"></div>
+
+  <div class="testimonial-wrapper reveal">
+    <div class="testimonial-slide active">
+      <div class="testimonial-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="t-quote">
+        "From the moment we walked in, we felt like family. Alberto came out personally to greet us, and every dish — from the tuna tartare to the crème brûlée — was a masterpiece. Easily the best dining experience we've had in Portugal."
+      </p>
+      <p class="t-author">Sofia M.</p>
+      <p class="t-source">Barcelona &nbsp;·&nbsp; TripAdvisor</p>
+    </div>
+
+    <div class="testimonial-slide">
+      <div class="testimonial-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="t-quote">
+        "The flavours, the presentation, the atmosphere… all five-star. The seafood paella was perfection, and the staff made us feel so welcome. You can tell this place is run with heart and soul. Can't wait to return!"
+      </p>
+      <p class="t-author">James L.</p>
+      <p class="t-source">London &nbsp;·&nbsp; TripAdvisor</p>
+    </div>
+
+    <div class="testimonial-slide">
+      <div class="testimonial-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="t-quote">
+        "A hidden gem in Alvor. The chef's passion is evident in every bite — we tried four dishes and each was flawlessly executed. The wine pairing recommendation was inspired. We'll be recommending Villa Velha to everyone."
+      </p>
+      <p class="t-author">Marie &amp; Pierre D.</p>
+      <p class="t-source">Paris &nbsp;·&nbsp; Restaurant Guru</p>
+    </div>
+
+    <div class="t-dots">
+      <button class="t-dot active" onclick="showSlide(0)"></button>
+      <button class="t-dot" onclick="showSlide(1)"></button>
+      <button class="t-dot" onclick="showSlide(2)"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INSTAGRAM ===== -->
+<div class="instagram-section">
+  <p class="label">Stay Connected</p>
+  <h3 style="font-family:'Playfair Display',serif;font-size:30px;font-weight:400;color:var(--dark-text);margin-bottom:28px;">Follow Our Journey</h3>
+  <a href="https://www.instagram.com/villavelha.alvor?igsh=MXg5eTNob3V4NzhxYQ%3D%3D&utm_source=qr" class="instagram-handle" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    @villavelha.alvor
+  </a>
+</div>
+
+<!-- ===== CONTACT ===== -->
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <p class="label reveal">Find Us</p>
+    <h2 class="heading reveal">Visit Villa Velha</h2>
+    <div class="rule reveal"></div>
+    <div class="contact-items">
+      <div class="contact-item reveal">
+        <p class="contact-item-label">Address</p>
+        <p class="contact-item-value">R. Poe. João de Deus 13<br>8500-026 Alvor, Portugal</p>
+      </div>
+      <div class="contact-item reveal">
+        <p class="contact-item-label">Hours</p>
+        <p class="contact-item-value">Monday – Saturday: 5:00 PM – 9:00 PM<br>Sunday: Closed</p>
+      </div>
+      <div class="contact-item reveal">
+        <p class="contact-item-label">Phone</p>
+        <p class="contact-item-value"><a href="tel:+531964399795">+531 964 399 795</a></p>
+      </div>
+      <div class="contact-item reveal">
+        <p class="contact-item-label">Email</p>
+        <p class="contact-item-value"><a href="mailto:villavelhaalvor@gmail.com">villavelhaalvor@gmail.com</a></p>
+      </div>
+    </div>
+    <a href="#book" class="btn-pink reveal" style="display:inline-block; margin-top:14px;">Reserve a Table</a>
+  </div>
+  <div class="contact-right">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3195.8!2d-8.5948!3d37.1316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x47f51566246aab6c!2sVilla%20Velha!5e0!3m2!1sen!2spt!4v1"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/KmKQIFgqgQm3g1IHbSZl/media/688c7757ea6d0f7cc510f337.png" alt="Villa Velha" />
+  <span class="footer-copy">&copy; 2026 Villa Velha by Alberto Punset. All rights reserved.</span>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#menu">Menu</a>
+    <a href="#book">Reserve</a>
+    <a href="#contact">Contact</a>
+  </div>
+</footer>
+
+<!-- ===== SCRIPTS ===== -->
+<script>
+// Nav scroll + logo swap
+const navbar  = document.getElementById('navbar');
+const navLogo = document.getElementById('navLogo');
+
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY > 50;
+  navbar.classList.toggle('scrolled', scrolled);
+  // When scrolled, logo goes dark; over hero, logo goes light/white
+  navLogo.querySelector('img').style.filter = scrolled ? 'brightness(0)' : 'brightness(10)';
+}, { passive:true });
+
+// Mobile menu
+const hamburger  = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+
+function toggleMenu() {
+  const open = mobileMenu.classList.toggle('open');
+  hamburger.classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function closeMenu() {
+  mobileMenu.classList.remove('open');
+  hamburger.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const revealObs = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('visible'), i * 70);
+      revealObs.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+revealEls.forEach(el => revealObs.observe(el));
+
+// Testimonials
+const slides   = document.querySelectorAll('.testimonial-slide');
+const tDots    = document.querySelectorAll('.t-dot');
+let current    = 0;
+let autoSlide;
+
+function showSlide(i) {
+  slides[current].classList.remove('active');
+  tDots[current].classList.remove('active');
+  current = i;
+  slides[current].classList.add('active');
+  tDots[current].classList.add('active');
+}
+function nextSlide() { showSlide((current + 1) % slides.length); }
+
+tDots.forEach((dot, i) => {
+  dot.addEventListener('click', () => { clearInterval(autoSlide); showSlide(i); autoSlide = setInterval(nextSlide, 6000); });
+});
+autoSlide = setInterval(nextSlide, 6000);
+
+// Menu language
+function showMenu(lang, btn) {
+  document.getElementById('menu-en').style.display = lang === 'en' ? 'grid' : 'none';
+  document.getElementById('menu-pt').style.display = lang === 'pt' ? 'grid' : 'none';
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// Lightbox — src based (menu)
+function openLightboxSrc(src) {
+  document.getElementById('lightbox-img').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// Lightbox — index based (gallery)
+let galleryImages = [];
+let lbIndex = 0;
+
+function openLightbox(index) {
+  const items = document.querySelectorAll('#galleryGrid .gallery-item img');
+  galleryImages = Array.from(items).map(img => img.src).filter(Boolean);
+  if (galleryImages.length === 0) return;
+  lbIndex = Math.min(index, galleryImages.length - 1);
+  document.getElementById('lightbox-img').src = galleryImages[lbIndex];
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function lightboxNav(dir) {
+  if (galleryImages.length === 0) return;
+  lbIndex = (lbIndex + dir + galleryImages.length) % galleryImages.length;
+  const img = document.getElementById('lightbox-img');
+  img.style.opacity = '0';
+  setTimeout(() => { img.src = galleryImages[lbIndex]; img.style.opacity = '1'; img.style.transition = 'opacity 0.3s'; }, 150);
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+  galleryImages = [];
+}
+
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft')  lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+});
+
+// Booking form — set min date, block Sundays + blocked dates from server
+const dateInput = document.getElementById('date');
+const today = new Date();
+dateInput.min = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
+
+let blockedDates = [];
+fetch('/api/blocked-dates')
+  .then(r => r.json())
+  .then(dates => { blockedDates = dates; })
+  .catch(() => {});
+
+dateInput.addEventListener('change', function() {
+  const chosen = new Date(this.value + 'T00:00:00');
+  if (chosen.getDay() === 0) {
+    alert('We are closed on Sundays. Please choose another day.');
+    this.value = ''; return;
+  }
+  if (blockedDates.includes(this.value)) {
+    alert('Sorry, this date is fully booked. Please choose another date.');
+    this.value = '';
+  }
+});
+
+async function submitBooking(e) {
+  e.preventDefault();
+  const required = ['firstName','lastName','email','phone','date','time','guests'];
+  let valid = true;
+
+  required.forEach(id => {
+    const el = document.getElementById(id);
+    if (!el.value.trim()) {
+      el.style.borderColor = '#c0392b';
+      el.style.boxShadow   = '0 0 0 3px rgba(192,57,43,0.12)';
+      valid = false;
+      el.addEventListener('input', () => { el.style.borderColor = ''; el.style.boxShadow = ''; }, { once:true });
+    }
+  });
+
+  const emailEl = document.getElementById('email');
+  if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
+    emailEl.style.borderColor = '#c0392b';
+    valid = false;
+  }
+
+  if (!valid) return;
+
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Sending…';
+  btn.disabled = true;
+
+  const payload = {
+    firstName: document.getElementById('firstName').value,
+    lastName:  document.getElementById('lastName').value,
+    email:     document.getElementById('email').value,
+    phone:     document.getElementById('phone').value,
+    date:      document.getElementById('date').value,
+    time:      document.getElementById('time').value,
+    guests:    document.getElementById('guests').value,
+    occasion:  document.getElementById('occasion').value,
+    dietary:   document.getElementById('dietary').value,
+    notes:     document.getElementById('notes').value,
+  };
+
+  try {
+    const res = await fetch('/api/bookings', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (res.ok) {
+      document.getElementById('formContent').style.display = 'none';
+      document.getElementById('formSuccess').style.display  = 'block';
+    } else {
+      alert(data.error || 'Something went wrong. Please try again.');
+      btn.textContent = 'Confirm Reservation';
+      btn.disabled = false;
+    }
+  } catch {
+    alert('Unable to connect. Please call us directly on +531 964 399 795.');
+    btn.textContent = 'Confirm Reservation';
+    btn.disabled = false;
+  }
+}
+
+function resetForm() {
+  document.getElementById('bookingForm').reset();
+  document.getElementById('formContent').style.display = 'block';
+  document.getElementById('formSuccess').style.display  = 'none';
+  const btn = document.querySelector('.form-submit');
+  btn.textContent = 'Confirm Reservation';
+  btn.disabled    = false;
+}
+
+// Parallax hero
+window.addEventListener('scroll', () => {
+  const bg = document.querySelector('.hero-bg');
+  if (bg) bg.style.transform = `scale(1.06) translateY(${window.scrollY * 0.22}px)`;
+}, { passive:true });
+</script>
+
+</body>
+</html>
