@@ -3,6 +3,8 @@
   "outputDirectory": ".",
   "framework": null,
   "routes": [
+    { "src": "/restaurant.jpg", "dest": "/restaurant.jpg" },
+    { "src": "/(.*\\.(?:jpg|jpeg|png|gif|webp|svg|ico|css|js))", "dest": "/$1" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
