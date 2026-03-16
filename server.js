@@ -253,7 +253,7 @@ async function sendCustomerConfirmation({ firstName, lastName, email, date, time
   const dateFormatted = formatDate(date);
 
   await resend.emails.send({
-    from: 'Villa Velha <onboarding@resend.dev>',
+    from: 'Villa Velha <reservations@villavelhaalvor.info>',
     to: email,
     subject: 'Reservation Request Received — Villa Velha',
     html: `
@@ -306,7 +306,7 @@ async function sendAdminNotification(booking) {
   const dateFormatted = formatDate(booking.date);
 
   await resend.emails.send({
-    from: 'Villa Velha <onboarding@resend.dev>',
+    from: 'Villa Velha <reservations@villavelhaalvor.info>',
     to: process.env.ADMIN_EMAIL,
     subject: `🆕 New Reservation — ${booking.firstName} ${booking.lastName} · ${booking.date} ${booking.time}`,
     html: `
@@ -346,7 +346,7 @@ async function sendStatusEmail(booking, status) {
   const isConfirmed = status === 'confirmed';
 
   await resend.emails.send({
-    from: 'Villa Velha <onboarding@resend.dev>',
+    from: 'Villa Velha <reservations@villavelhaalvor.info>',
     to: booking.email,
     subject: isConfirmed
       ? `✅ Reservation Confirmed — Villa Velha`
