@@ -1,6 +1,5 @@
 server.js
 node_modules
 bookings.db
+data.json
 .env
-package.json
-package-lock.json

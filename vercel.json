@@ -4,7 +4,8 @@
   "framework": null,
   "routes": [
     { "src": "/restaurant.jpg", "dest": "/restaurant.jpg" },
-    { "src": "/(.*\\.(?:jpg|jpeg|png|gif|webp|svg|ico|css|js))", "dest": "/$1" },
+    { "src": "/(.*\\.(?:jpg|jpeg|png|gif|webp|svg|ico|css))", "dest": "/$1" },
+    { "src": "/", "dest": "/index.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
