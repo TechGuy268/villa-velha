@@ -4,7 +4,7 @@
   "description": "Villa Velha Restaurant Booking System",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node --experimental-sqlite server.js",
     "dev": "nodemon server.js"
   },
   "engines": {
