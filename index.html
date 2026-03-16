@@ -1650,7 +1650,7 @@ const today = new Date();
 dateInput.min = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
 
 let blockedDates = [];
-fetch('/api/blocked-dates')
+fetch('https://villa-velha-api.up.railway.app/api/blocked-dates')
   .then(r => r.json())
   .then(dates => { blockedDates = dates; })
   .catch(() => {});
@@ -1708,7 +1708,7 @@ async function submitBooking(e) {
   };
 
   try {
-    const res = await fetch('/api/bookings', {
+    const res = await fetch('https://villa-velha-api.up.railway.app/api/bookings', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify(payload),
