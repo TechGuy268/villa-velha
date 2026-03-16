@@ -11,11 +11,7 @@
       ]
     }
   ],
-  "routes": [
-    { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/images/(.*)", "dest": "/images/$1" },
-    { "src": "/(.*\\.(?:jpg|jpeg|png|gif|webp|svg|ico|css|js|json|woff|woff2|ttf))", "dest": "/$1" },
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/(.*)", "dest": "/index.html" }
+  "rewrites": [
+    { "source": "/((?!images|api).*)", "destination": "/index.html" }
   ]
 }
