@@ -1,9 +1,11 @@
 require('dotenv').config();
 const express    = require('express');
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
 const path       = require('path');
 const cors       = require('cors');
 const fs         = require('fs');
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
@@ -241,16 +243,6 @@ app.get('/api/stats', adminAuth, (req, res) => {
 // EMAIL HELPERS
 // ─────────────────────────────────────────────────────────────────────────────
 
-function createTransporter() {
-  return nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS,
-    },
-  });
-}
-
 function formatDate(dateStr) {
   return new Date(dateStr + 'T00:00:00').toLocaleDateString('en-GB', {
     weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
@@ -258,11 +250,10 @@ function formatDate(dateStr) {
 }
 
 async function sendCustomerConfirmation({ firstName, lastName, email, date, time, guests, bookingId }) {
-  const transporter = createTransporter();
   const dateFormatted = formatDate(date);
 
-  await transporter.sendMail({
-    from: `"Villa Velha" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: 'Villa Velha <onboarding@resend.dev>',
     to: email,
     subject: 'Reservation Request Received — Villa Velha',
     html: `
@@ -312,11 +303,10 @@ async function sendCustomerConfirmation({ firstName, lastName, email, date, time
 }
 
 async function sendAdminNotification(booking) {
-  const transporter = createTransporter();
   const dateFormatted = formatDate(booking.date);
 
-  await transporter.sendMail({
-    from: `"Villa Velha Bookings" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: 'Villa Velha <onboarding@resend.dev>',
     to: process.env.ADMIN_EMAIL,
     subject: `🆕 New Reservation — ${booking.firstName} ${booking.lastName} · ${booking.date} ${booking.time}`,
     html: `
@@ -352,12 +342,11 @@ async function sendAdminNotification(booking) {
 }
 
 async function sendStatusEmail(booking, status) {
-  const transporter = createTransporter();
   const dateFormatted = formatDate(booking.date);
   const isConfirmed = status === 'confirmed';
 
-  await transporter.sendMail({
-    from: `"Villa Velha" <${process.env.EMAIL_USER}>`,
+  await resend.emails.send({
+    from: 'Villa Velha <onboarding@resend.dev>',
     to: booking.email,
     subject: isConfirmed
       ? `✅ Reservation Confirmed — Villa Velha`
