@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express    = require('express');
-const { DatabaseSync } = require('node:sqlite');
+const Database = require('better-sqlite3');
 const nodemailer = require('nodemailer');
 const path       = require('path');
 const cors       = require('cors');
@@ -9,7 +9,7 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 
 // ── Database setup ────────────────────────────────────────────────────────────
-const db = new DatabaseSync('bookings.db');
+const db = new Database('bookings.db');
 
 db.exec(`
   CREATE TABLE IF NOT EXISTS bookings (
