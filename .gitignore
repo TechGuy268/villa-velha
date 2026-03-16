@@ -3,6 +3,7 @@
 
 # Database (contains real customer data)
 bookings.db
+data.json
 
 # Dependencies
 node_modules/

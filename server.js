@@ -1,38 +1,112 @@
 require('dotenv').config();
 const express    = require('express');
-const Database = require('better-sqlite3');
 const nodemailer = require('nodemailer');
 const path       = require('path');
 const cors       = require('cors');
+const fs         = require('fs');
 
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
-// ── Database setup ────────────────────────────────────────────────────────────
-const db = new Database('bookings.db');
+// ── JSON File Database ────────────────────────────────────────────────────────
+const DB_FILE = path.join(__dirname, 'data.json');
 
-db.exec(`
-  CREATE TABLE IF NOT EXISTS bookings (
-    id          INTEGER PRIMARY KEY AUTOINCREMENT,
-    firstName   TEXT NOT NULL,
-    lastName    TEXT NOT NULL,
-    email       TEXT NOT NULL,
-    phone       TEXT NOT NULL,
-    date        TEXT NOT NULL,
-    time        TEXT NOT NULL,
-    guests      TEXT NOT NULL,
-    occasion    TEXT DEFAULT '',
-    dietary     TEXT DEFAULT '',
-    notes       TEXT DEFAULT '',
-    status      TEXT DEFAULT 'pending',
-    createdAt   TEXT DEFAULT (datetime('now','localtime'))
-  );
+function readDB() {
+  if (!fs.existsSync(DB_FILE)) {
+    const init = { bookings: [], blockedDates: [], nextId: 1 };
+    fs.writeFileSync(DB_FILE, JSON.stringify(init, null, 2));
+    return init;
+  }
+  return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'));
+}
 
-  CREATE TABLE IF NOT EXISTS blocked_dates (
-    date   TEXT PRIMARY KEY,
-    reason TEXT DEFAULT ''
-  );
-`);
+function writeDB(data) {
+  fs.writeFileSync(DB_FILE, JSON.stringify(data, null, 2));
+}
+
+// ── DB helper methods ─────────────────────────────────────────────────────────
+const db = {
+  insertBooking(booking) {
+    const data = readDB();
+    const newBooking = {
+      id: data.nextId++,
+      ...booking,
+      status: 'pending',
+      createdAt: new Date().toLocaleString('en-GB'),
+    };
+    data.bookings.push(newBooking);
+    writeDB(data);
+    return newBooking;
+  },
+
+  getBookings({ status, date, search } = {}) {
+    const data = readDB();
+    let results = data.bookings;
+    if (status && status !== 'all') results = results.filter(b => b.status === status);
+    if (date)   results = results.filter(b => b.date === date);
+    if (search) {
+      const s = search.toLowerCase();
+      results = results.filter(b =>
+        `${b.firstName} ${b.lastName}`.toLowerCase().includes(s) ||
+        b.email.toLowerCase().includes(s) ||
+        b.phone.includes(s)
+      );
+    }
+    return results.sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time));
+  },
+
+  getBookingById(id) {
+    return readDB().bookings.find(b => b.id === Number(id));
+  },
+
+  updateBookingStatus(id, status) {
+    const data = readDB();
+    const booking = data.bookings.find(b => b.id === Number(id));
+    if (!booking) return false;
+    booking.status = status;
+    writeDB(data);
+    return true;
+  },
+
+  deleteBooking(id) {
+    const data = readDB();
+    data.bookings = data.bookings.filter(b => b.id !== Number(id));
+    writeDB(data);
+  },
+
+  getBlockedDates() {
+    return readDB().blockedDates.map(d => d.date);
+  },
+
+  blockDate(date, reason) {
+    const data = readDB();
+    data.blockedDates = data.blockedDates.filter(d => d.date !== date);
+    data.blockedDates.push({ date, reason: reason || '' });
+    writeDB(data);
+  },
+
+  unblockDate(date) {
+    const data = readDB();
+    data.blockedDates = data.blockedDates.filter(d => d.date !== date);
+    writeDB(data);
+  },
+
+  getStats() {
+    const data = readDB();
+    const today = new Date().toISOString().split('T')[0];
+    return {
+      total:     data.bookings.length,
+      pending:   data.bookings.filter(b => b.status === 'pending').length,
+      confirmed: data.bookings.filter(b => b.status === 'confirmed').length,
+      declined:  data.bookings.filter(b => b.status === 'declined').length,
+      today:     data.bookings.filter(b => b.date === today).length,
+    };
+  },
+
+  isDateBlocked(date) {
+    return readDB().blockedDates.some(d => d.date === date);
+  },
+};
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors());
@@ -71,20 +145,15 @@ app.post('/api/bookings', async (req, res) => {
   }
 
   // Check blocked dates
-  const blocked = db.prepare('SELECT * FROM blocked_dates WHERE date = ?').get(date);
-  if (blocked) {
+  if (db.isDateBlocked(date)) {
     return res.status(400).json({ error: 'Sorry, this date is unavailable. Please choose another date.' });
   }
 
   // Save to DB
-  const stmt = db.prepare(`
-    INSERT INTO bookings (firstName, lastName, email, phone, date, time, guests, occasion, dietary, notes)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
-  const result = stmt.run(firstName, lastName, email, phone, date, time, guests,
-    occasion || '', dietary || '', notes || '');
+  const newBooking = db.insertBooking({ firstName, lastName, email, phone, date, time, guests,
+    occasion: occasion || '', dietary: dietary || '', notes: notes || '' });
 
-  const bookingId = result.lastInsertRowid;
+  const bookingId = newBooking.id;
 
   // Send emails (don't block the response)
   try {
@@ -104,24 +173,12 @@ app.get('/api/bookings', adminAuth, (req, res) => {
   const conditions = [];
   const params = [];
 
-  if (status && status !== 'all') { conditions.push('status = ?'); params.push(status); }
-  if (date)   { conditions.push('date = ?'); params.push(date); }
-  if (search) {
-    conditions.push("(firstName || ' ' || lastName LIKE ? OR email LIKE ? OR phone LIKE ?)");
-    const s = `%${search}%`;
-    params.push(s, s, s);
-  }
-
-  if (conditions.length) query += ' WHERE ' + conditions.join(' AND ');
-  query += ' ORDER BY date ASC, time ASC';
-
-  const bookings = db.prepare(query).all(...params);
-  res.json(bookings);
+  res.json(db.getBookings({ status, date, search }));
 });
 
 // GET /api/bookings/:id — admin only
 app.get('/api/bookings/:id', adminAuth, (req, res) => {
-  const booking = db.prepare('SELECT * FROM bookings WHERE id = ?').get(req.params.id);
+  const booking = db.getBookingById(req.params.id);
   if (!booking) return res.status(404).json({ error: 'Booking not found' });
   res.json(booking);
 });
@@ -135,10 +192,10 @@ app.patch('/api/bookings/:id/status', adminAuth, async (req, res) => {
     return res.status(400).json({ error: 'Invalid status' });
   }
 
-  const booking = db.prepare('SELECT * FROM bookings WHERE id = ?').get(id);
+  const booking = db.getBookingById(id);
   if (!booking) return res.status(404).json({ error: 'Booking not found' });
 
-  db.prepare('UPDATE bookings SET status = ? WHERE id = ?').run(status, id);
+  db.updateBookingStatus(id, status);
 
   // Email customer
   try {
@@ -152,40 +209,32 @@ app.patch('/api/bookings/:id/status', adminAuth, async (req, res) => {
 
 // DELETE /api/bookings/:id — admin only
 app.delete('/api/bookings/:id', adminAuth, (req, res) => {
-  db.prepare('DELETE FROM bookings WHERE id = ?').run(req.params.id);
+  db.deleteBooking(req.params.id);
   res.json({ success: true });
 });
 
 // GET /api/blocked-dates — public (frontend needs this to disable dates)
 app.get('/api/blocked-dates', (req, res) => {
-  const dates = db.prepare('SELECT date FROM blocked_dates').all().map(r => r.date);
-  res.json(dates);
+  res.json(db.getBlockedDates());
 });
 
 // POST /api/blocked-dates — admin only
 app.post('/api/blocked-dates', adminAuth, (req, res) => {
   const { date, reason } = req.body;
   if (!date) return res.status(400).json({ error: 'Date required' });
-  db.prepare('INSERT OR REPLACE INTO blocked_dates (date, reason) VALUES (?, ?)').run(date, reason || '');
+  db.blockDate(date, reason);
   res.json({ success: true });
 });
 
 // DELETE /api/blocked-dates/:date — admin only
 app.delete('/api/blocked-dates/:date', adminAuth, (req, res) => {
-  db.prepare('DELETE FROM blocked_dates WHERE date = ?').run(req.params.date);
+  db.unblockDate(req.params.date);
   res.json({ success: true });
 });
 
 // GET /api/stats — admin only
 app.get('/api/stats', adminAuth, (req, res) => {
-  const today = new Date().toISOString().split('T')[0];
-  res.json({
-    total:     db.prepare('SELECT COUNT(*) as c FROM bookings').get().c,
-    pending:   db.prepare("SELECT COUNT(*) as c FROM bookings WHERE status = 'pending'").get().c,
-    confirmed: db.prepare("SELECT COUNT(*) as c FROM bookings WHERE status = 'confirmed'").get().c,
-    declined:  db.prepare("SELECT COUNT(*) as c FROM bookings WHERE status = 'declined'").get().c,
-    today:     db.prepare('SELECT COUNT(*) as c FROM bookings WHERE date = ?').get(today).c,
-  });
+  res.json(db.getStats());
 });
 
 // ─────────────────────────────────────────────────────────────────────────────
