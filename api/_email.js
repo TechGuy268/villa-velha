@@ -44,8 +44,8 @@ async function sendCustomerConfirmation({ id, firstName, lastName, email, date, 
       </div>
       <p style="font-size:15px;line-height:1.7;color:#6A4050;">You will receive a confirmation email once your booking has been reviewed. If you need to make changes or have any questions, please contact us:</p>
       <p style="margin:20px 0;font-size:15px;color:#2C1520;">
-        📞 <a href="tel:+531964399795" style="color:#D4637A;">+531 964 399 795</a><br>
-        ✉️ <a href="mailto:villavelhaalvor@gmail.com" style="color:#D4637A;">villavelhaalvor@gmail.com</a>
+        📞 <a href="tel:+351964399795" style="color:#D4637A;">+351 964 399 795</a><br>
+        ✉️ <a href="mailto:villavelha.ad@outlook.com" style="color:#D4637A;">villavelha.ad@outlook.com</a>
       </p>
       <p style="font-size:15px;line-height:1.7;color:#6A4050;font-style:italic;">We look forward to welcoming you to Villa Velha.</p>
     </div>
@@ -139,8 +139,8 @@ async function sendStatusEmail(booking, status) {
       <p style="font-size:15px;line-height:1.7;color:#6A4050;">If you need to cancel or modify your reservation please contact us at least 24 hours in advance:</p>
       ` : `<p style="font-size:15px;line-height:1.7;color:#6A4050;text-align:center;">Please contact us to discuss alternative arrangements:</p>`}
       <p style="margin:20px 0;font-size:15px;color:#2C1520;text-align:center;">
-        📞 <a href="tel:+531964399795" style="color:#D4637A;">+531 964 399 795</a><br>
-        ✉️ <a href="mailto:villavelhaalvor@gmail.com" style="color:#D4637A;">villavelhaalvor@gmail.com</a>
+        📞 <a href="tel:+351964399795" style="color:#D4637A;">+351 964 399 795</a><br>
+        ✉️ <a href="mailto:villavelha.ad@outlook.com" style="color:#D4637A;">villavelha.ad@outlook.com</a>
       </p>
     </div>
     <div style="background:#2C1520;padding:24px 40px;text-align:center;">

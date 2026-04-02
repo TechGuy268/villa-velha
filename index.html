@@ -1204,7 +1204,7 @@ footer img { height:34px; filter:brightness(10); opacity:0.75; }
       <h2 class="heading">Reserve<br>Your Table</h2>
       <div class="rule"></div>
       <p class="body-text">
-        Join us for an unforgettable evening at Villa Velha. Fill in your details and we will confirm your reservation by email within 24 hours.
+        Join us for an unforgettable evening at Villa Velha. To make a reservation, simply get in touch by phone, WhatsApp, or email.
       </p>
 
       <div class="booking-detail">
@@ -1226,145 +1226,57 @@ footer img { height:34px; filter:brightness(10); opacity:0.75; }
           <div class="booking-detail-icon">📞</div>
           <div>
             <div class="booking-detail-label">Phone</div>
-            <div class="booking-detail-value"><a href="tel:+531964399795">+531 964 399 795</a></div>
+            <div class="booking-detail-value"><a href="tel:+351964399795">+351 964 399 795</a></div>
           </div>
         </div>
         <div class="booking-detail-item">
           <div class="booking-detail-icon">✉️</div>
           <div>
             <div class="booking-detail-label">Email</div>
-            <div class="booking-detail-value"><a href="mailto:villavelhaalvor@gmail.com">villavelhaalvor@gmail.com</a></div>
+            <div class="booking-detail-value"><a href="mailto:villavelha.ad@outlook.com">villavelha.ad@outlook.com</a></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Form -->
+    <!-- Contact Options -->
     <div class="booking-form reveal right" id="bookingFormWrap">
-      <div id="formContent">
-        <div style="margin-bottom:32px;">
-          <p class="label">Your Information</p>
-          <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--dark-text);">Make a Reservation</h3>
-        </div>
-
-        <form id="bookingForm" onsubmit="submitBooking(event)" novalidate>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="firstName">First Name *</label>
-              <input class="form-input" type="text" id="firstName" name="firstName" placeholder="Your first name" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="lastName">Last Name *</label>
-              <input class="form-input" type="text" id="lastName" name="lastName" placeholder="Your last name" required />
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label" for="email">Email Address *</label>
-              <input class="form-input" type="email" id="email" name="email" placeholder="your@email.com" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="phone">Phone Number *</label>
-              <input class="form-input" type="tel" id="phone" name="phone" placeholder="+1 000 000 0000" required />
-            </div>
-          </div>
-
-          <div class="form-divider"></div>
-
-          <div class="form-row three">
-            <div class="form-group">
-              <label class="form-label" for="date">Date *</label>
-              <input class="form-input" type="date" id="date" name="date" required />
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="time">Preferred Time *</label>
-              <select class="form-select" id="time" name="time" required>
-                <option value="" disabled selected>Select time</option>
-                <option value="17:00">5:00 PM</option>
-                <option value="17:30">5:30 PM</option>
-                <option value="18:00">6:00 PM</option>
-                <option value="18:30">6:30 PM</option>
-                <option value="19:00">7:00 PM</option>
-                <option value="19:30">7:30 PM</option>
-                <option value="20:00">8:00 PM</option>
-                <option value="20:30">8:30 PM</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label" for="guests">Guests *</label>
-              <select class="form-select" id="guests" name="guests" required>
-                <option value="" disabled selected>How many?</option>
-                <option value="1">1 Guest</option>
-                <option value="2">2 Guests</option>
-                <option value="3">3 Guests</option>
-                <option value="4">4 Guests</option>
-                <option value="5">5 Guests</option>
-                <option value="6">6 Guests</option>
-                <option value="7">7 Guests</option>
-                <option value="8">8 Guests</option>
-                <option value="9+">9+ Guests</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label" for="occasion">Special Occasion</label>
-              <select class="form-select" id="occasion" name="occasion">
-                <option value="">No special occasion</option>
-                <option value="birthday">Birthday</option>
-                <option value="anniversary">Anniversary</option>
-                <option value="proposal">Proposal / Engagement</option>
-                <option value="business">Business Dinner</option>
-                <option value="celebration">General Celebration</option>
-                <option value="other">Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label" for="dietary">Dietary Requirements</label>
-              <select class="form-select" id="dietary" name="dietary">
-                <option value="">None</option>
-                <option value="vegetarian">Vegetarian</option>
-                <option value="vegan">Vegan</option>
-                <option value="gluten-free">Gluten Free</option>
-                <option value="nut-allergy">Nut Allergy</option>
-                <option value="shellfish-allergy">Shellfish Allergy</option>
-                <option value="lactose-free">Lactose Free</option>
-                <option value="other">Other (specify below)</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="form-row full">
-            <div class="form-group">
-              <label class="form-label" for="notes">Additional Requests</label>
-              <textarea class="form-textarea" id="notes" name="notes" placeholder="Any special requests, allergies, or notes for us…"></textarea>
-            </div>
-          </div>
-
-          <div class="form-divider"></div>
-
-          <button type="submit" class="form-submit">Confirm Reservation</button>
-
-          <p class="form-note">
-            We will send a confirmation to your email within 24 hours.<br>
-            For same-day bookings please call us directly.
-          </p>
-        </form>
+      <div style="margin-bottom:32px;">
+        <p class="label">Get in Touch</p>
+        <h3 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:400;color:var(--dark-text);">Make a Reservation</h3>
       </div>
 
-      <!-- Success -->
-      <div class="form-success" id="formSuccess">
-        <div class="check-icon">✓</div>
-        <h3>Reservation Received</h3>
-        <p>Thank you! We have received your reservation request and will send a confirmation to your email within 24 hours. We look forward to welcoming you to Villa Velha.</p>
-        <button class="form-reset-btn" onclick="resetForm()">Make Another Reservation</button>
-      </div>
+      <p style="font-size:16px;line-height:1.7;color:#6A4050;margin:0 0 32px;">
+        Contact us directly to reserve your table. We're happy to assist you by phone, WhatsApp, or email.
+      </p>
+
+      <a href="tel:+351964399795" style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:#FAF0F3;border:1px solid #f0dde3;border-radius:8px;text-decoration:none;margin-bottom:16px;transition:background 0.2s;">
+        <span style="font-size:28px;">📞</span>
+        <span>
+          <span style="display:block;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#A08090;margin-bottom:4px;">Call Us</span>
+          <span style="display:block;font-size:18px;color:#2C1520;font-weight:500;">+351 964 399 795</span>
+        </span>
+      </a>
+
+      <a href="https://wa.me/351964399795?text=Hello%2C%20I%20would%20like%20to%20make%20a%20reservation%20at%20Villa%20Velha." target="_blank" rel="noopener" style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:#f0faf0;border:1px solid #c8e6c9;border-radius:8px;text-decoration:none;margin-bottom:16px;transition:background 0.2s;">
+        <span style="font-size:28px;">💬</span>
+        <span>
+          <span style="display:block;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#66996a;margin-bottom:4px;">WhatsApp</span>
+          <span style="display:block;font-size:18px;color:#2C1520;font-weight:500;">+351 964 399 795</span>
+        </span>
+      </a>
+
+      <a href="mailto:villavelha.ad@outlook.com?subject=Reservation%20Request%20%E2%80%94%20Villa%20Velha" style="display:flex;align-items:center;gap:16px;padding:20px 24px;background:#FAF0F3;border:1px solid #f0dde3;border-radius:8px;text-decoration:none;margin-bottom:16px;transition:background 0.2s;">
+        <span style="font-size:28px;">✉️</span>
+        <span>
+          <span style="display:block;font-family:Arial,sans-serif;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:#A08090;margin-bottom:4px;">Email Us</span>
+          <span style="display:block;font-size:18px;color:#2C1520;font-weight:500;">villavelha.ad@outlook.com</span>
+        </span>
+      </a>
+
+      <p style="font-size:13px;color:#A08090;margin-top:24px;text-align:center;font-style:italic;">
+        For same-day bookings, please call or WhatsApp us directly.
+      </p>
     </div>
 
   </div>
@@ -1448,11 +1360,11 @@ footer img { height:34px; filter:brightness(10); opacity:0.75; }
       </div>
       <div class="contact-item reveal">
         <p class="contact-item-label">Phone</p>
-        <p class="contact-item-value"><a href="tel:+531964399795">+531 964 399 795</a></p>
+        <p class="contact-item-value"><a href="tel:+351964399795">+351 964 399 795</a></p>
       </div>
       <div class="contact-item reveal">
         <p class="contact-item-label">Email</p>
-        <p class="contact-item-value"><a href="mailto:villavelhaalvor@gmail.com">villavelhaalvor@gmail.com</a></p>
+        <p class="contact-item-value"><a href="mailto:villavelha.ad@outlook.com">villavelha.ad@outlook.com</a></p>
       </div>
     </div>
     <a href="#book" class="btn-pink reveal" style="display:inline-block; margin-top:14px;">Reserve a Table</a>
@@ -1589,101 +1501,6 @@ document.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowLeft')  lightboxNav(-1);
   if (e.key === 'ArrowRight') lightboxNav(1);
 });
-
-// Booking form — set min date, block Sundays + blocked dates from server
-const dateInput = document.getElementById('date');
-const today = new Date();
-dateInput.min = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
-
-let blockedDates = [];
-fetch('/api/blocked-dates')
-  .then(r => r.json())
-  .then(dates => { blockedDates = dates; })
-  .catch(() => {});
-
-dateInput.addEventListener('change', function() {
-  const chosen = new Date(this.value + 'T00:00:00');
-  if (chosen.getDay() === 0) {
-    alert('We are closed on Sundays. Please choose another day.');
-    this.value = ''; return;
-  }
-  if (blockedDates.includes(this.value)) {
-    alert('Sorry, this date is fully booked. Please choose another date.');
-    this.value = '';
-  }
-});
-
-async function submitBooking(e) {
-  e.preventDefault();
-  const required = ['firstName','lastName','email','phone','date','time','guests'];
-  let valid = true;
-
-  required.forEach(id => {
-    const el = document.getElementById(id);
-    if (!el.value.trim()) {
-      el.style.borderColor = '#c0392b';
-      el.style.boxShadow   = '0 0 0 3px rgba(192,57,43,0.12)';
-      valid = false;
-      el.addEventListener('input', () => { el.style.borderColor = ''; el.style.boxShadow = ''; }, { once:true });
-    }
-  });
-
-  const emailEl = document.getElementById('email');
-  if (emailEl.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailEl.value)) {
-    emailEl.style.borderColor = '#c0392b';
-    valid = false;
-  }
-
-  if (!valid) return;
-
-  const btn = document.querySelector('.form-submit');
-  btn.textContent = 'Sending…';
-  btn.disabled = true;
-
-  const payload = {
-    firstName: document.getElementById('firstName').value,
-    lastName:  document.getElementById('lastName').value,
-    email:     document.getElementById('email').value,
-    phone:     document.getElementById('phone').value,
-    date:      document.getElementById('date').value,
-    time:      document.getElementById('time').value,
-    guests:    document.getElementById('guests').value,
-    occasion:  document.getElementById('occasion').value,
-    dietary:   document.getElementById('dietary').value,
-    notes:     document.getElementById('notes').value,
-  };
-
-  try {
-    const res = await fetch('/api/bookings', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify(payload),
-    });
-    const data = await res.json();
-
-    if (res.ok) {
-      document.getElementById('formContent').style.display = 'none';
-      document.getElementById('formSuccess').style.display  = 'block';
-    } else {
-      alert(data.error || 'Something went wrong. Please try again.');
-      btn.textContent = 'Confirm Reservation';
-      btn.disabled = false;
-    }
-  } catch {
-    alert('Unable to connect. Please call us directly on +531 964 399 795.');
-    btn.textContent = 'Confirm Reservation';
-    btn.disabled = false;
-  }
-}
-
-function resetForm() {
-  document.getElementById('bookingForm').reset();
-  document.getElementById('formContent').style.display = 'block';
-  document.getElementById('formSuccess').style.display  = 'none';
-  const btn = document.querySelector('.form-submit');
-  btn.textContent = 'Confirm Reservation';
-  btn.disabled    = false;
-}
 
 // Parallax hero
 window.addEventListener('scroll', () => {
